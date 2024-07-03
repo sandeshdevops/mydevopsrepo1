@@ -36,18 +36,17 @@ pipeline {
                 }
             }
         }
-        stage('Push') {
+         stage('Push') {
             steps {
-                // Push Docker image to Docker Hub
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', registryCredentials) {
-                        dockerImage.push()
+                    docker.withRegistry('https://index.docker.io/v1/', registryCredentials) {
+                        dockerImage.push('latest')
                     }
                 }
             }
         }
     }
-
+}
     post {
         success {
             echo 'Pipeline succeeded! Docker image built, tested, and pushed successfully.'
