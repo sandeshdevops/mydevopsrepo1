@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        registryCredentials = 'dockerhub_credentials'
+        registryCredentials = '271bdd6e-0a51-49bb-9140-bf91dcea0235'
         dockerImage = 'sandeshyashlaha/devopsproject2'
         dockerTag = 'latest'
         dockerfilePath = 'docker/creating-image/Dockerfile'  // Assuming Dockerfile is at the root of the repository
