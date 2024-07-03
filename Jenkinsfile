@@ -28,16 +28,15 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Example: Run tests inside the Docker container
                 script {
-                    dockerImage.inside('-p 38081:80') {
-                        sh 'python3 docker/creating-image/app.py'  // Adjust this command based on your actual test script
-                        
+                    dockerImage.inside('-p 5001:5000') {  // Map port 5001 on the host to port 5000 in the container
+                        sh 'python3 docker/creating-image/app.py --host=0.0.0.0 &'  // Bind to all IP addresses
+                        sleep 10  // Wait for the Flask app to start
+                        sh 'curl http://127.0.0.1:5001'  // Check if the app is reachable on the new port
                     }
                 }
             }
         }
-
         stage('Push') {
             steps {
                 // Push Docker image to Docker Hub
