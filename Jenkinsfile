@@ -31,7 +31,8 @@ pipeline {
                 // Example: Run tests inside the Docker container
                 script {
                     dockerImage.inside {
-                        sh 'python3 python-docker/app.py'  // Adjust this command based on your actual test script
+                        sh 'ls'  // Adjust this command based on your actual test script
+                        sh 'pwd'
                     }
                 }
             }
