@@ -5,7 +5,7 @@ pipeline {
         registryCredentials = 'dockerhub_credentials'
         dockerImage = 'sandeshyashlaha/devopsproject2/project2'
         dockerTag = 'latest'
-        dockerfilePath = 'Dockerfile'  // Assuming Dockerfile is at the root of the repository
+        dockerfilePath = 'https://github.com/sandeshdevops/mydevopsrepo1/tree/main/docker/creating-image'  // Assuming Dockerfile is at the root of the repository
     }
 
     stages {
