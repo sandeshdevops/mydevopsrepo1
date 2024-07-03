@@ -32,6 +32,7 @@ pipeline {
                 script {
                     dockerImage.inside('-p 5000:5000') {
                         sh 'python3 docker/creating-image/app.py'  // Adjust this command based on your actual test script
+                        sh 'curl http://127.0.0.1:5000'  // Optional: Check if the app is reachable
                     }
                 }
             }
