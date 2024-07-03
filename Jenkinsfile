@@ -5,7 +5,7 @@ pipeline {
         registryCredentials = '271bdd6e-0a51-49bb-9140-bf91dcea0235'
         dockerImage = 'sandeshyashlaha/devopsproject2'
         dockerTag = 'latest'
-        dockerfilePath = 'docker/creating-image/Dockerfile'  // Assuming Dockerfile is at the root of the repository
+        dockerfilePath = 'docker/creating-image/Dockerfile'
     }
 
     stages {
@@ -28,9 +28,9 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    dockerImage.inside('-p 5001:5000') {  // Map port 5001 on the host to port 5000 in the container
-                        sh 'python3 docker/creating-image/app.py --host=0.0.0.0 &'  // Bind to all IP addresses
-                        sleep 10  // Wait for the Flask app to start
+                    dockerImage.inside('-p 5001:5000') {
+                        sh 'python3 docker/creating-image/app.py --host=0.0.0.0 &'
+                        sleep 10
                     }
                 }
             }
@@ -57,11 +57,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                    // Debug information
+                    sh 'docker ps -a'
+                    sh 'docker images'
+
                     // Stop and remove existing container if it exists
                     sh """
                     if [ \$(docker ps -a -q -f name=project2) ]; then
-                        docker stop project2
-                        docker rm project2
+                        docker stop project2 || true
+                        docker rm project2 || true
                     fi
                     """
 
