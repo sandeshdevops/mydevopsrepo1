@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -46,11 +45,36 @@ pipeline {
                 }
             }
         }
+
+        stage('Approval') {
+            steps {
+                script {
+                    input message: 'Approve deployment?', ok: 'Deploy'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Stop and remove existing container if it exists
+                    sh """
+                    if [ \$(docker ps -a -q -f name=project2) ]; then
+                        docker stop project2
+                        docker rm project2
+                    fi
+                    """
+
+                    // Run Docker container
+                    sh "docker run -d -p 8080:80 --name project2 ${dockerImage}:${dockerTag}"
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Pipeline succeeded! Docker image built, tested, and pushed successfully.'
+            echo 'Pipeline succeeded! Docker image built, tested, pushed, and deployed successfully.'
         }
         failure {
             echo 'Pipeline failed! Check the Jenkins console output for details.'
