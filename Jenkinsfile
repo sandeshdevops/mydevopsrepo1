@@ -70,7 +70,7 @@ pipeline {
                     """
 
                     // Run Docker container
-                    sh "docker run -d -p 8080:80 --name project2 ${dockerImage}:${dockerTag}"
+                    sh "docker run -d -p 8080:80 --name sandeshyashlaha/devopsproject2 ${dockerImage}:${dockerTag}"
                 }
             }
         }
