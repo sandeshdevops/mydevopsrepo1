@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -13,7 +14,6 @@ pipeline {
             steps {
                 // Checkout the code from GitHub
                 git branch: 'main', url: 'https://github.com/sandeshdevops/mydevopsrepo1.git'
-
             }
         }
 
@@ -32,11 +32,12 @@ pipeline {
                     dockerImage.inside('-p 5001:5000') {  // Map port 5001 on the host to port 5000 in the container
                         sh 'python3 docker/creating-image/app.py --host=0.0.0.0 &'  // Bind to all IP addresses
                         sleep 10  // Wait for the Flask app to start
-                                           }
+                    }
                 }
             }
         }
-         stage('Push') {
+
+        stage('Push') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', registryCredentials) {
@@ -46,7 +47,7 @@ pipeline {
             }
         }
     }
-}
+
     post {
         success {
             echo 'Pipeline succeeded! Docker image built, tested, and pushed successfully.'
