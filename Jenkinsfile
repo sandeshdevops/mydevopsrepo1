@@ -30,7 +30,7 @@ pipeline {
             steps {
                 // Example: Run tests inside the Docker container
                 script {
-                    dockerImage.ineside {
+                    dockerImage.inside {
                         sh 'python3 app.py'  // Adjust this command based on your actual test script
                     }
                 }
